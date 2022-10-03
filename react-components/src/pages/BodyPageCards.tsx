@@ -35,7 +35,7 @@ class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
   render() {
     console.log(this.state.data);
     if (this.state.data.length == 0) {
-      return <h1>Для получения данных введите запрос!</h1>;
+      return <h1 className="message">Для получения данных введите запрос!</h1>;
     } else {
       return <Cards {...this.state.data} />;
     }

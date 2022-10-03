@@ -24,6 +24,7 @@ class Input extends React.Component<Record<string, React.ReactNode>, { input: st
       <div className={classes.myInput_wrapper}>
         <div className={classes.myInput_search}></div>
         <input
+          aria-label="searchPanel"
           className={classes.myInput}
           {...this.props}
           value={this.state.input}
