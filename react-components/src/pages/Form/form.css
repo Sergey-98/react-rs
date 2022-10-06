@@ -1,0 +1,17 @@
+.right {
+  border: 3px solid yellow;
+}
+.mistakes {
+  border: 3px solid red;
+}
+.form-block {
+  margin: 5% auto 0 auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.form-submit {
+  width: 30%;
+}

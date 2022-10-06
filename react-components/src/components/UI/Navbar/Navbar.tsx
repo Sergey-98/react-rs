@@ -14,6 +14,7 @@ class Navbar extends React.Component<Record<string, React.ReactNode>, { value: s
         <div className={styles.navbar__links}>
           <NavLink to="/">Главная</NavLink>
           <NavLink to="/about">О сайте</NavLink>
+          <NavLink to="/form">Форма</NavLink>
         </div>
       </div>
     );
