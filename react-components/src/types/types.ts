@@ -17,3 +17,29 @@ export type Films = {
   Year?: string;
   imdbID?: string;
 };
+
+type Error = {
+  message: string;
+  class: string;
+};
+
+export type Errors = {
+  errorName: Error;
+  errorSurname: Error;
+  errorDate: Error;
+  errorCheck: Error;
+  errorFile: Error;
+  errorEmail: Error;
+  errorGender: Error;
+  buildData: Card[];
+};
+
+export type Card = {
+  name: string;
+  surname: string;
+  gender: string;
+  date: string;
+  email: string;
+  check: boolean;
+  file: string;
+};
