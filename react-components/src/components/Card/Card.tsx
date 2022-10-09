@@ -10,9 +10,9 @@ class Card extends React.Component<{ value: Films }, object> {
     return (
       <div className={styles.card}>
         <img className={styles.poster} src={this.props.value.Poster} alt="poster" />
-        <h1>Название: {this.props.value.Title}</h1>
-        <h3>Жанр: {this.props.value.Type}</h3>
-        <h3>Год выхода: {this.props.value.Year}</h3>
+        <h1 className={styles.film__title}>Название: {this.props.value.Title}</h1>
+        <h3 className={styles.film__subtitle}>Жанр: {this.props.value.Type}</h3>
+        <h3 className={styles.film__subtitle}>Год выхода: {this.props.value.Year}</h3>
       </div>
     );
   }

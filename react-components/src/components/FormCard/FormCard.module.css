@@ -1,5 +1,12 @@
 .form_card {
+  cursor: pointer;
+  padding: 3%;
+  width: 25vw;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   gap: 1em;
+  border: 3px solid #4682B4;
+  background-color: rgba(46, 170, 220, 0.2);
+  color: #191970;
 }

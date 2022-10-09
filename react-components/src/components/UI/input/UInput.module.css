@@ -1,16 +1,16 @@
 .myInput {
   width: 30%;
   padding: 5px 25px;
-  margin: 5px 0;
-  border: 1px solid teal;
+  margin: 7px;
+  border: 2px solid #4682B4;
 }
 
 .myInput_search {
   position: relative;
   width: 1rem;
   height: 1rem;
-  top: 25px;
-  left: calc(100% - 99.8%);
+  top: 28px;
+  left: calc(100% - 99.1%);
   background-image: url(../../../assets/svg/search.svg);
   background-size: 16px;
   z-index: 5;

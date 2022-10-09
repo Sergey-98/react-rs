@@ -1,5 +1,6 @@
 .form_cards {
-  margin-top: 10%;
+  margin-top: 5%;
+  margin-left: 2%;
   display: flex;
-  gap: 5%;
+  gap: 2%;
 }
