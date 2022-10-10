@@ -187,6 +187,9 @@ class Form extends React.Component<object, Errors> {
     if (count === 7) {
       console.log(this.inputMale, this.inputFemale);
       if (name && surname && date && email && gender && (male || female) && checkData && file) {
+        const fileList = file.files as FileList;
+        const imgURL = URL.createObjectURL(fileList[0]);
+        console.log(imgURL);
         const Card: Card = {
           name: name.value,
           surname: surname.value,
@@ -194,7 +197,8 @@ class Form extends React.Component<object, Errors> {
           date: date.value,
           email: email.value,
           check: checkData.checked,
-          file: file.value,
+          file: imgURL,
+          // file: file.value,
         };
         name.value = '';
         surname.value = '';
