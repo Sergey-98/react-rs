@@ -59,7 +59,6 @@ class Form extends React.Component<object, Errors> {
         if (this.submit.current) {
           this.submit.current.disabled = false;
         }
-        // this.checkValid();
       }
     };
   }
