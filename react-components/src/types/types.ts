@@ -18,6 +18,14 @@ export type Films = {
   imdbID?: string;
 };
 
+export type CardData = {
+  title?: string;
+  director?: string;
+  producer?: string;
+  release_date?: string;
+  episode_id?: number;
+};
+
 type Error = {
   message: string;
   class: string;

@@ -1,17 +1,15 @@
 import React from 'react';
 import Cards from 'components/Cards/Cards';
-import { Films } from '../types/types';
-import getService from '../API/getService';
+import { CardData } from '../types/types';
+import { getSearchData } from '../API/getService';
 import Input from 'components/UI/input/UInput';
 
-class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
-  public getService: getService;
+class BodyPageCards extends React.Component<CardData, { data: CardData[] | [] }> {
   public input: Input;
 
-  constructor(props: Films) {
+  constructor(props: CardData) {
     super(props);
     this.input = new Input({ children: null });
-    this.getService = new getService();
     this.state = {
       data: [],
     };
@@ -20,25 +18,25 @@ class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
   async get() {
     const string = this.input.getState();
     const search = !string.input ? null : string;
-    return search?.input ? await getService.getFilms(String(search.input)) : null;
+    console.log(await getSearchData(String(search?.input)));
+    return search?.input ? await getSearchData(String(search.input)) : null;
   }
 
   async componentDidMount() {
     const param = await this.get();
-    console.log(param);
     if (param) {
       console.log(param);
-      this.setState({ data: param.data.Search.splice(0, 10) });
+      this.setState({ data: param.data.results });
     }
   }
 
   render() {
     console.log(this.state.data);
-    if (this.state.data.length == 0) {
-      return <h1 className="message">Для получения данных введите запрос!</h1>;
-    } else {
-      return <Cards {...this.state.data} />;
-    }
+    // if (this.state.data.length == 0) {
+    //   return <h1 className="message">Для получения данных введите запрос!</h1>;
+    // } else {
+    return this.state.data.length == 0 ? <h1>Загрузка...</h1> : <Cards {...this.state.data} />;
+    // }
   }
 }
 
