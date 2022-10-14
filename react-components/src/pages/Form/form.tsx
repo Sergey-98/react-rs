@@ -229,18 +229,28 @@ class Form extends React.Component<object, Errors> {
     this.checkForm();
   }
 
-  render() {
-    const inputHandler = () => {
-      this.checkForm();
-    };
-    const createCards = (event: React.FormEvent) => {
-      this.checkValid();
-      event?.preventDefault();
-    };
+  inputHandler = () => {
+    this.checkForm();
+  };
+  createCards = (event: React.FormEvent) => {
+    this.checkValid();
+    event?.preventDefault();
+  };
 
+  render() {
+    const {
+      errorName,
+      errorSurname,
+      errorDate,
+      errorCheck,
+      errorFile,
+      errorGender,
+      errorEmail,
+      buildData,
+    } = this.state;
     return (
       <div className="form-page">
-        <form className="form-block" onChange={inputHandler} onSubmit={createCards}>
+        <form className="form-block" onChange={this.inputHandler} onSubmit={this.createCards}>
           <label>
             <input
               className="input__text"
@@ -249,7 +259,7 @@ class Form extends React.Component<object, Errors> {
               autoComplete="off"
               placeholder="First Name"
             />
-            <span className={this.state.errorName.class}>{this.state.errorName.message}</span>
+            <span className={errorName.class}>{errorName.message}</span>
           </label>
           <label>
             <input
@@ -259,12 +269,12 @@ class Form extends React.Component<object, Errors> {
               autoComplete="off"
               placeholder="Last Name"
             />
-            <span className={this.state.errorSurname.class}>{this.state.errorSurname.message}</span>
+            <span className={errorSurname.class}>{errorSurname.message}</span>
           </label>
           <label>
             Your birthday:
             <input className="input__date" type="date" ref={this.inputDate} />
-            <span className={this.state.errorDate.class}>{this.state.errorDate.message}</span>
+            <span className={errorDate.class}>{errorDate.message}</span>
           </label>
           <div className="radio-btn_container">
             <label className="radio-btn_label">
@@ -277,7 +287,7 @@ class Form extends React.Component<object, Errors> {
               <input type="radio" name="gender" ref={this.inputFemale} autoComplete="off" />
               <span className="radio-btn_span"></span>
             </label>
-            <span className={this.state.errorGender.class}>{this.state.errorGender.message}</span>
+            <span className={errorGender.class}>{errorGender.message}</span>
           </div>
           <label>
             <input
@@ -287,7 +297,7 @@ class Form extends React.Component<object, Errors> {
               autoComplete="off"
               placeholder="e-mail"
             />
-            <span className={this.state.errorEmail.class}>{this.state.errorEmail.message}</span>
+            <span className={errorEmail.class}>{errorEmail.message}</span>
           </label>
           <input
             className="input__file"
@@ -301,17 +311,17 @@ class Form extends React.Component<object, Errors> {
               <img className="input__file-icon" src={downloadIcon} alt="Выбрать файл" width="60" />
             </span>
             <span className="input__file-button-text">Выберите файл</span>
-            <span className={this.state.errorFile.class}>{this.state.errorFile.message}</span>
+            <span className={errorFile.class}>{errorFile.message}</span>
           </label>
           <label className="checkbox_label">
             I consent to the processing of personal data
             <input className="input__checkbox" type="checkbox" ref={this.inputCheckData} />
             <span className="checkbox_span"></span>
-            <span className={this.state.errorCheck.class}>{this.state.errorCheck.message}</span>
+            <span className={errorCheck.class}>{errorCheck.message}</span>
           </label>
           <input type="submit" value="Submit" className="form-submit" ref={this.submit} disabled />
         </form>
-        {this.state.buildData.length > 0 ? <FormCards {...this.state.buildData} /> : null}
+        {this.state.buildData.length > 0 ? <FormCards {...buildData} /> : null}
       </div>
     );
   }
