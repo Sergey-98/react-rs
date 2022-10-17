@@ -1,25 +1,17 @@
 import React from 'react';
 import UInput from '../components/UI/input/UInput';
 import BodyPageCards from './BodyPageCards';
-import { CardData } from 'types/types';
+import { Films } from 'types/types';
 import Input from 'components/UI/input/UInput';
 
-class Main extends React.Component<object, { option: boolean }> {
+class Main extends React.Component<Films, { option: boolean }> {
   public input: Input;
 
-  constructor(props: CardData) {
+  constructor(props: Films) {
     super(props);
     this.input = new Input({ children: null });
     this.state = { option: false };
   }
-
-  // componentDidUpdate() {
-  //   if (localStorage.getItem('searchValue') === '') {
-  //     console.log('clear');
-  //     this.setState({ option: false });
-  //   }
-  //   console.log('update');
-  // }
 
   componentDidMount() {
     if (localStorage.getItem('searchValue')) {

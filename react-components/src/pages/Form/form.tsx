@@ -136,7 +136,6 @@ class Form extends React.Component<object, Errors> {
         errorGender: { message: '', class: 'none' },
       });
     } else {
-      console.log('Введите пол');
       male?.classList.add('mistakes');
       female?.classList.add('mistakes');
       this.setState({
@@ -184,11 +183,9 @@ class Form extends React.Component<object, Errors> {
     }
 
     if (count === 7) {
-      console.log(this.inputMale, this.inputFemale);
       if (name && surname && date && email && gender && (male || female) && checkData && file) {
         const fileList = file.files as FileList;
         const imgURL = URL.createObjectURL(fileList[0]);
-        console.log(imgURL);
         const Card: Card = {
           name: name.value,
           surname: surname.value,
@@ -197,7 +194,6 @@ class Form extends React.Component<object, Errors> {
           email: email.value,
           check: checkData.checked,
           file: imgURL,
-          // file: file.value,
         };
         name.value = '';
         surname.value = '';
@@ -213,7 +209,6 @@ class Form extends React.Component<object, Errors> {
         file.value = '';
         this.state.buildData.push(Card);
       }
-      console.log(this.state.buildData);
     } else {
       if (this.submit.current) {
         this.submit.current.disabled = true;

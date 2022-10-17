@@ -51,3 +51,9 @@ export type Card = {
   check: boolean;
   file: string;
 };
+
+export type CardProps = {
+  value: Films;
+  key: undefined | string;
+  onOpenModal: () => void;
+};

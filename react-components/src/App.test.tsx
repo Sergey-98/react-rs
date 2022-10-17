@@ -21,7 +21,6 @@ describe('App', () => {
 
   it('React router', () => {
     render(<App />);
-    // expect(screen.getByText(/Для получения данных введите запрос!/i)).toBeInTheDocument();
     userEvent.click(screen.getByText(/О сайте/i));
     expect(screen.getByText(/React Components/i)).toBeInTheDocument();
   });

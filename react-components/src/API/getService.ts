@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function getSearchData(path: string) {
-  return axios.get(`https://swapi.dev/api/films/?search=${path}`);
+  return axios.get(`https://swapi.dev/api/people/?search=${path}`);
 }
 
 export function getSubData(path: string) {

@@ -18,8 +18,6 @@ class FormCards extends React.Component<Card[], { data: Card[] | [] }> {
   }
 
   render() {
-    // this.setState(Object.values(this.props));
-    // console.log(this.props, Array.from(this.state.data));
     return (
       <div className={styles.form_cards}>
         {this.state.data.map((card: Card) => (

@@ -28,9 +28,6 @@
   width: 20rem;
   height: 21rem;
 }
-.poster:hover ~ .film__subtitle {
-    display: none;
-}
 .poster:hover ~ .film__title {
   display: none;
 }

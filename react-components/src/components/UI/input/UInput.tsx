@@ -17,7 +17,6 @@ class Input extends React.Component<Record<string, React.ReactNode>, { input: st
   }
   render() {
     const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      // console.log(event.target.value);
       this.setState({ input: event.target.value });
     };
     return (
