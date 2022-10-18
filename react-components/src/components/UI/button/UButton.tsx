@@ -6,9 +6,9 @@ class UButton extends React.Component<Record<string, React.ReactNode>, { value: 
   constructor(props: Props) {
     super(props);
   }
-  async postLocalStorage(item: string) {
-    if (!localStorage.getItem('search')) {
-      localStorage.setItem('search', item);
+  postLocalStorage(item: string) {
+    if (!localStorage.getItem('searchValue')) {
+      localStorage.setItem('searchValue', item);
     }
   }
   render() {

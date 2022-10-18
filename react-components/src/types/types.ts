@@ -17,3 +17,11 @@ export type Films = {
   Year?: string;
   imdbID?: string;
 };
+
+export type PromiseFilms = {
+  data: Search;
+};
+
+type Search = {
+  Search: Films[] | [];
+};

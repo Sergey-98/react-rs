@@ -1,11 +1,7 @@
 import React from 'react';
 import cl from './Loader.module.css';
-import { Props } from 'types/types';
 
-class Loader extends React.Component<Record<string, React.ReactNode>, { value: string }> {
-  constructor(props: Props) {
-    super(props);
-  }
+class Loader extends React.Component {
   render() {
     return <div className={cl.loader}></div>;
   }

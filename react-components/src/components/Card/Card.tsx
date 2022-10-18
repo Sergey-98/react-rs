@@ -2,10 +2,7 @@ import React from 'react';
 import styles from './Card.module.css';
 import { Films } from 'types/types';
 
-class Card extends React.Component<{ value: Films }, object> {
-  constructor(props: { value: Films }) {
-    super(props);
-  }
+class Card extends React.Component<{ value: Films }> {
   render() {
     return (
       <div className={styles.card}>

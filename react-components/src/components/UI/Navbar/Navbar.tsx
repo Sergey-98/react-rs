@@ -1,12 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Navbar.module.css';
-import { Props } from 'types/types';
 
-class Navbar extends React.Component<Record<string, React.ReactNode>, { value: string }> {
-  constructor(props: Props) {
-    super(props);
-  }
+class Navbar extends React.Component {
   render() {
     return (
       <div className={styles.navbar}>

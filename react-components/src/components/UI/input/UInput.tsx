@@ -15,11 +15,10 @@ class Input extends React.Component<Record<string, React.ReactNode>, { input: st
   getState() {
     return this.state;
   }
+  inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ input: event.target.value });
+  };
   render() {
-    const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      // console.log(event.target.value);
-      this.setState({ input: event.target.value });
-    };
     return (
       <div className={classes.myInput_wrapper}>
         <div className={classes.myInput_search}></div>
@@ -28,7 +27,7 @@ class Input extends React.Component<Record<string, React.ReactNode>, { input: st
           className={classes.myInput}
           {...this.props}
           value={this.state.input}
-          onChange={inputHandler}
+          onChange={this.inputHandler}
         />
         <div className={classes.myInput_close}></div>
       </div>

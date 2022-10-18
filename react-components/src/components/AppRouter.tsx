@@ -1,12 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { routes } from '../router/index';
-import { Props } from '../types/types';
 
-class AppRouter extends React.Component<Record<string, React.ReactNode>, { value: string }> {
-  constructor(props: Props) {
-    super(props);
-  }
+class AppRouter extends React.Component {
   render() {
     return (
       <Routes>

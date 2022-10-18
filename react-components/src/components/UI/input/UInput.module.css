@@ -7,10 +7,10 @@
 
 .myInput_search {
   position: relative;
-  width: 1rem;
-  height: 1rem;
-  top: 25px;
-  left: calc(100% - 99.8%);
+  width: 1em;
+  height: 1em;
+  top: 1.6em;
+  left: 0.3em;
   background-image: url(../../../assets/svg/search.svg);
   background-size: 16px;
   z-index: 5;

@@ -1,39 +1,33 @@
 import React from 'react';
 import Cards from 'components/Cards/Cards';
 import { Films } from '../types/types';
-import getService from '../API/getService';
-import Input from 'components/UI/input/UInput';
+import { getFilms } from '../API/getService';
 
-class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
-  public getService: getService;
-  public input: Input;
+class BodyPageCards extends React.Component<Films, { data: Films[] }> {
+  maxCardsOnPage: number;
 
   constructor(props: Films) {
     super(props);
-    this.input = new Input({ children: null });
-    this.getService = new getService();
     this.state = {
       data: [],
     };
+    this.maxCardsOnPage = 10;
   }
 
   async get() {
-    const string = this.input.getState();
-    const search = !string.input ? null : string;
-    return search?.input ? await getService.getFilms(String(search.input)) : null;
+    const string = localStorage.getItem('searchValue');
+    const search = !string ? null : string;
+    return search ? await getFilms(String(search)) : null;
   }
 
   async componentDidMount() {
     const param = await this.get();
-    console.log(param);
     if (param) {
-      console.log(param);
-      this.setState({ data: param.data.Search.splice(0, 10) });
+      this.setState({ data: param.data.Search.slice(0, this.maxCardsOnPage) });
     }
   }
 
   render() {
-    console.log(this.state.data);
     if (this.state.data.length == 0) {
       return <h1 className="message">Для получения данных введите запрос!</h1>;
     } else {
