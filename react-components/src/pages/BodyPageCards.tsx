@@ -25,15 +25,12 @@ class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
 
   async componentDidMount() {
     const param = await this.get();
-    console.log(param);
     if (param) {
-      console.log(param);
       this.setState({ data: param.data.Search.splice(0, 10) });
     }
   }
 
   render() {
-    console.log(this.state.data);
     if (this.state.data.length == 0) {
       return <h1 className="message">Для получения данных введите запрос!</h1>;
     } else {
