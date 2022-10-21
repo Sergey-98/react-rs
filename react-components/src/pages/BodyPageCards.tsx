@@ -2,15 +2,12 @@ import React from 'react';
 import Cards from 'components/Cards/Cards';
 import { Films } from '../types/types';
 import getService from '../API/getService';
-import Input from 'components/UI/input/UInput';
 
 class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
   public getService: getService;
-  public input: Input;
 
   constructor(props: Films) {
     super(props);
-    this.input = new Input({ children: null });
     this.getService = new getService();
     this.state = {
       data: [],
@@ -18,9 +15,9 @@ class BodyPageCards extends React.Component<Films, { data: Films[] | [] }> {
   }
 
   async get() {
-    const string = this.input.getState();
-    const search = !string.input ? null : string;
-    return search?.input ? await getService.getFilms(String(search.input)) : null;
+    const string = localStorage.getItem('searchValue');
+    const search = !string ? null : string;
+    return search ? await getService.getFilms(String(search)) : null;
   }
 
   async componentDidMount() {
