@@ -31,7 +31,7 @@ type Error = {
   class: string;
 };
 
-export type Errors = {
+export type stateForm = {
   errorName: Error;
   errorSurname: Error;
   errorDate: Error;
@@ -40,6 +40,7 @@ export type Errors = {
   errorEmail: Error;
   errorGender: Error;
   buildData: Card[];
+  isValid: boolean;
 };
 
 export type Card = {
