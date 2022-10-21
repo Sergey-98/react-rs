@@ -1,57 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import UInput from '../components/UI/input/UInput';
 import BodyPageCards from './BodyPageCards';
-import { Films } from 'types/types';
-import Input from 'components/UI/input/UInput';
 
-class Main extends React.Component<Films, { option: boolean }> {
-  public input: Input;
+export default function Main() {
+  const [option, setOption] = useState(false);
 
-  constructor(props: Films) {
-    super(props);
-    this.input = new Input({ children: null });
-    this.state = { option: false };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     if (localStorage.getItem('searchValue')) {
-      this.setState({ option: true });
+      setOption(true);
+    }
+  }, []);
+
+  function changeValue() {
+    const string = localStorage.getItem('searchValue');
+    if (!string) {
+      setOption(false);
     }
   }
 
-  render() {
-    const onKeyDown = (event: React.KeyboardEvent) => {
-      if (
-        (event.code == 'Enter' || event.code == 'NumpadEnter') &&
-        localStorage.getItem('searchValue')
-      ) {
-        this.setState({ option: true });
-      } else if (
-        (event.code == 'Enter' || event.code == 'NumpadEnter') &&
-        !localStorage.getItem('searchValue')
-      ) {
-        this.setState({ option: false });
-      }
-    };
-
-    const changeValue = () => {
-      const string = localStorage.getItem('searchValue');
-      if (!string) {
-        this.setState({ option: false });
-      }
-    };
-
-    return (
-      <div onKeyDown={onKeyDown} onChange={changeValue}>
-        <UInput placeholder="Search" />
-        {this.state.option ? (
-          <BodyPageCards />
-        ) : (
-          <h1 className="message">Для получения данных введите запрос!</h1>
-        )}
-      </div>
-    );
+  function onKeyDown(event: React.KeyboardEvent) {
+    if (
+      (event.code == 'Enter' || event.code == 'NumpadEnter') &&
+      localStorage.getItem('searchValue')
+    ) {
+      setOption(true);
+    } else if (
+      (event.code == 'Enter' || event.code == 'NumpadEnter') &&
+      !localStorage.getItem('searchValue')
+    ) {
+      setOption(false);
+    }
   }
-}
 
-export default Main;
+  return (
+    <div onKeyDown={onKeyDown} onChange={changeValue}>
+      <UInput placeholder="Search" />
+      {option ? (
+        <BodyPageCards />
+      ) : (
+        <h1 className="message">Для получения данных введите запрос!</h1>
+      )}
+    </div>
+  );
+}

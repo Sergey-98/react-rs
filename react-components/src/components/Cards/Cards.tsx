@@ -4,18 +4,12 @@ import Card from 'components/Card/Card';
 import styles from './Cards.module.css';
 import Modal from 'components/Modal/Modal';
 
-class Cards extends React.Component<Films[], { data: Films[]; classModal: boolean; id: number }> {
+class Cards extends React.Component<Films[], { classModal: boolean; id: number }> {
   cards: React.ReactNode;
 
   constructor(props: Films[]) {
     super(props);
-    this.state = { data: Object.values(this.props), classModal: false, id: 0 };
-  }
-
-  componentDidUpdate(prevProps: Films[]) {
-    if (this.props !== prevProps) {
-      this.setState({ data: Object.values(this.props) });
-    }
+    this.state = { classModal: false, id: 0 };
   }
 
   changeModalVisible = (id: number) => {
@@ -23,14 +17,14 @@ class Cards extends React.Component<Films[], { data: Films[]; classModal: boolea
   };
 
   render() {
-    return this.state.data.length === 0 ? (
+    return Object.values(this.props).length === 0 ? (
       <h1 className="message">Загрузка...</h1>
     ) : (
       <div className={styles.cards}>
-        {this.state.data.map((card: Films, id: number) => (
+        {Object.values(this.props).map((card: Films, id: number) => (
           <Card value={card} key={String(id)} onOpenModal={() => this.changeModalVisible(id)} />
         ))}
-        <Modal val={this.state.data[this.state.id]} visible={this.state.classModal} />
+        <Modal val={Object.values(this.props)[this.state.id]} visible={this.state.classModal} />
       </div>
     );
   }

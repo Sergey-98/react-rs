@@ -1,10 +1,12 @@
 import React from 'react';
+import { stateForm, Card } from '../../types/types';
 import './form.css';
-import { Errors, Card } from '../../types/types';
 import FormCards from 'components/FormCards/FormCards';
 import downloadIcon from '../../assets/svg/download-icon.svg';
+import { validName, validEmail } from '../../Constants/Constants';
 
-class Form extends React.Component<object, Errors> {
+class Form extends React.Component<object, stateForm> {
+  form: React.RefObject<HTMLFormElement>;
   inputName: React.RefObject<HTMLInputElement>;
   inputSurname: React.RefObject<HTMLInputElement>;
   inputDate: React.RefObject<HTMLInputElement>;
@@ -14,10 +16,14 @@ class Form extends React.Component<object, Errors> {
   inputFemale: React.RefObject<HTMLInputElement>;
   inputEmail: React.RefObject<HTMLInputElement>;
   submit: React.RefObject<HTMLInputElement>;
-  checkForm: () => void;
+  validateForm: () => void;
+  validName: RegExp;
+  validEmail: RegExp;
+  count: number;
 
   constructor(props: object) {
     super(props);
+    this.form = React.createRef<HTMLFormElement>();
     this.inputName = React.createRef<HTMLInputElement>();
     this.inputSurname = React.createRef<HTMLInputElement>();
     this.inputDate = React.createRef<HTMLInputElement>();
@@ -27,6 +33,9 @@ class Form extends React.Component<object, Errors> {
     this.inputFemale = React.createRef<HTMLInputElement>();
     this.inputEmail = React.createRef<HTMLInputElement>();
     this.submit = React.createRef<HTMLInputElement>();
+    this.validName = validName;
+    this.validEmail = validEmail;
+    this.count = 0;
     this.state = {
       errorName: { message: '', class: 'none' },
       errorSurname: { message: '', class: 'none' },
@@ -35,10 +44,11 @@ class Form extends React.Component<object, Errors> {
       errorFile: { message: '', class: 'none' },
       errorGender: { message: '', class: 'none' },
       errorEmail: { message: '', class: 'none' },
+      isValid: true,
       buildData: [],
     };
 
-    this.checkForm = () => {
+    this.validateForm = () => {
       const name = this.inputName.current;
       const surname = this.inputSurname.current;
       const date = this.inputDate.current;
@@ -57,132 +67,35 @@ class Form extends React.Component<object, Errors> {
         file?.value
       ) {
         if (this.submit.current) {
-          this.submit.current.disabled = false;
+          this.setState({
+            isValid: false,
+          });
         }
       }
     };
   }
 
   checkValid() {
-    let count = 0;
-    const validName = /^[a-zA-Zа-яА-Я ]+$/;
-    const validEmail =
-      /^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i;
-    const allowedExtensions = ['jpg', 'png', 'gif', 'bmp'];
-    const currentDate = Date.now();
     const name = this.inputName.current;
     const surname = this.inputSurname.current;
     const date = this.inputDate.current;
-    let gender = '';
     const male = this.inputMale.current;
     const female = this.inputFemale.current;
     const email = this.inputEmail.current;
     const checkData = this.inputCheckData.current;
     const file = this.inputFile.current;
     const fileExtension = file?.value.split('.').pop();
-    if (name && validName.test(name?.value)) {
-      name?.classList.remove('mistakes');
-      count += 1;
-      this.setState({
-        errorName: { message: '', class: 'none' },
-      });
-    } else {
-      name?.classList.add('mistakes');
-      this.setState({
-        errorName: { message: 'Неверно заполнено поле!', class: 'error-text' },
-      });
-    }
 
-    if (surname && validName.test(surname?.value)) {
-      surname.classList.remove('mistakes');
-      count += 1;
-      this.setState({
-        errorSurname: { message: '', class: 'none' },
-      });
-    } else {
-      surname?.classList.add('mistakes');
-      this.setState({
-        errorSurname: { message: 'Неверно заполнено поле!', class: 'error-text' },
-      });
-    }
+    this.validateNameField(name);
+    this.validateLastNameField(surname);
+    this.validateDateField(date);
+    this.validateEmailField(email);
+    this.validateCheckData(checkData);
+    this.validateFileLoader(fileExtension);
 
-    if (date && Date.parse(date?.value) <= currentDate) {
-      date?.classList.remove('mistakes');
-      count += 1;
-      this.setState({
-        errorDate: { message: '', class: 'none' },
-      });
-    } else {
-      date?.classList.add('mistakes');
-      this.setState({
-        errorDate: { message: 'Неверно заполнено поле!', class: 'error-text' },
-      });
-    }
+    const gender = this.validateGender(male, female);
 
-    if (male?.checked) {
-      male?.classList.remove('mistakes');
-      female?.classList.remove('mistakes');
-      gender = 'male';
-      count += 1;
-      this.setState({
-        errorGender: { message: '', class: 'none' },
-      });
-    } else if (female?.checked) {
-      male?.classList.remove('mistakes');
-      female?.classList.remove('mistakes');
-      gender = 'female';
-      count += 1;
-      this.setState({
-        errorGender: { message: '', class: 'none' },
-      });
-    } else {
-      male?.classList.add('mistakes');
-      female?.classList.add('mistakes');
-      this.setState({
-        errorGender: { message: 'Неверно заполнено поле!', class: 'error-text' },
-      });
-    }
-
-    if (email && validEmail.test(email?.value)) {
-      email?.classList.remove('mistakes');
-      count += 1;
-      this.setState({
-        errorEmail: { message: '', class: 'none' },
-      });
-    } else {
-      email?.classList.add('mistakes');
-      this.setState({
-        errorEmail: { message: 'Неверно заполнено поле!', class: 'error-text' },
-      });
-    }
-
-    if (checkData?.checked) {
-      checkData?.classList.remove('mistakes');
-      count += 1;
-      this.setState({
-        errorCheck: { message: '', class: 'none' },
-      });
-    } else {
-      checkData?.classList.add('mistakes');
-      this.setState({
-        errorCheck: {
-          message: 'Для продолжения, необходимо подтвердить согласие!',
-          class: 'error-text',
-        },
-      });
-    }
-
-    if (allowedExtensions.includes(fileExtension as string)) {
-      file?.classList.remove('mistakes');
-      count += 1;
-    } else {
-      file?.classList.add('mistakes');
-      this.setState({
-        errorFile: { message: 'Ошибка чтения файла!', class: 'error-text' },
-      });
-    }
-
-    if (count === 7) {
+    if (this.count === 7) {
       if (name && surname && date && email && gender && (male || female) && checkData && file) {
         const fileList = file.files as FileList;
         const imgURL = URL.createObjectURL(fileList[0]);
@@ -195,41 +108,132 @@ class Form extends React.Component<object, Errors> {
           check: checkData.checked,
           file: imgURL,
         };
-        name.value = '';
-        surname.value = '';
-        date.value = '';
-        email.value = '';
-        if (male) {
-          male.checked = false;
-        }
-        if (female) {
-          female.checked = false;
-        }
-        checkData.checked = false;
-        file.value = '';
+        this.form.current?.reset();
         this.state.buildData.push(Card);
+        this.count = 0;
       }
     } else {
       if (this.submit.current) {
-        this.submit.current.disabled = true;
-        this.checkForm();
+        this.setState({
+          isValid: true,
+        });
+        this.validateForm();
+        this.count = 0;
       }
     }
   }
+
+  validateNameField(name: HTMLInputElement | null) {
+    if (name && this.validName.test(name?.value)) {
+      this.count += 1;
+      this.setState({
+        errorName: { message: '', class: 'none' },
+      });
+    } else {
+      this.setState({
+        errorName: { message: 'Убедитесь, что имя состоит из букв!', class: 'error-text' },
+      });
+    }
+  }
+
+  validateLastNameField(surname: HTMLInputElement | null) {
+    if (surname && this.validName.test(surname?.value)) {
+      this.count += 1;
+      this.setState({
+        errorSurname: { message: '', class: 'none' },
+      });
+    } else {
+      this.setState({
+        errorSurname: { message: 'Убедитесь, что фамилия состоит из букв!', class: 'error-text' },
+      });
+    }
+  }
+
+  validateDateField(date: HTMLInputElement | null) {
+    const currentDate = Date.now();
+    if (date && Date.parse(date?.value) <= currentDate) {
+      this.count += 1;
+      this.setState({
+        errorDate: { message: '', class: 'none' },
+      });
+    } else {
+      this.setState({
+        errorDate: { message: 'Убедитесь, что дата не в будущем!', class: 'error-text' },
+      });
+    }
+  }
+
+  validateEmailField(email: HTMLInputElement | null) {
+    if (email && this.validEmail.test(email?.value)) {
+      this.count += 1;
+      this.setState({
+        errorEmail: { message: '', class: 'none' },
+      });
+    } else {
+      this.setState({
+        errorEmail: { message: 'Неверно заполнено поле!', class: 'error-text' },
+      });
+    }
+  }
+
+  validateCheckData(checkData: HTMLInputElement | null) {
+    if (checkData?.checked) {
+      this.count += 1;
+      this.setState({
+        errorCheck: { message: '', class: 'none' },
+      });
+    } else {
+      this.setState({
+        errorCheck: {
+          message: 'Для продолжения, необходимо подтвердить согласие!',
+          class: 'error-text',
+        },
+      });
+    }
+  }
+
+  validateFileLoader(fileExtension: string | undefined) {
+    const allowedExtensions = ['jpg', 'png', 'gif', 'bmp'];
+    if (allowedExtensions.includes(fileExtension as string)) {
+      this.count += 1;
+      this.setState({
+        errorFile: { message: '', class: '' },
+      });
+    } else {
+      this.setState({
+        errorFile: { message: 'Ошибка чтения файла!', class: 'error-text' },
+      });
+    }
+  }
+
+  validateGender(male: HTMLInputElement | null, female: HTMLInputElement | null) {
+    let gender = '';
+    if (male?.checked) {
+      gender = 'male';
+      this.count += 1;
+      this.setState({
+        errorGender: { message: '', class: 'none' },
+      });
+      return gender;
+    } else if (female?.checked) {
+      gender = 'female';
+      this.count += 1;
+      this.setState({
+        errorGender: { message: '', class: 'none' },
+      });
+      return gender;
+    } else {
+      this.setState({
+        errorGender: { message: 'Неверно заполнено поле!', class: 'error-text' },
+      });
+    }
+  }
+
   componentDidMount() {
     this.inputName.current?.focus();
   }
-
-  componentDidUpdate() {
-    this.checkForm();
-  }
-
-  inputHandler = () => {
-    this.checkForm();
-  };
-  createCards = (event: React.FormEvent) => {
-    this.checkValid();
-    event?.preventDefault();
+  handleSubmit = () => {
+    this.validateForm();
   };
 
   render() {
@@ -241,11 +245,22 @@ class Form extends React.Component<object, Errors> {
       errorFile,
       errorGender,
       errorEmail,
+      isValid,
       buildData,
     } = this.state;
+
+    const onSubmitDataCards = (event: React.FormEvent) => {
+      this.checkValid();
+      event?.preventDefault();
+    };
     return (
       <div className="form-page">
-        <form className="form-block" onChange={this.inputHandler} onSubmit={this.createCards}>
+        <form
+          className="form-block"
+          onChange={this.handleSubmit}
+          onSubmit={onSubmitDataCards}
+          ref={this.form}
+        >
           <label>
             <input
               className="input__text"
@@ -314,9 +329,15 @@ class Form extends React.Component<object, Errors> {
             <span className="checkbox_span"></span>
             <span className={errorCheck.class}>{errorCheck.message}</span>
           </label>
-          <input type="submit" value="Submit" className="form-submit" ref={this.submit} disabled />
+          <input
+            type="submit"
+            value="Submit"
+            className="form-submit"
+            ref={this.submit}
+            disabled={isValid}
+          />
         </form>
-        {this.state.buildData.length > 0 ? <FormCards {...buildData} /> : null}
+        {buildData.length > 0 ? <FormCards {...buildData} /> : null}
       </div>
     );
   }
