@@ -2,38 +2,37 @@ import React from 'react';
 import Cards from 'components/Cards/Cards';
 import { Films } from '../types/types';
 import { getFilms } from '../API/getService';
-import Input from 'components/UI/input/UInput';
 
 class BodyPageCards extends React.Component<Films, { data: Films[] }> {
-  public input: Input;
+  maxCardsOnPage: number;
 
   constructor(props: Films) {
     super(props);
-    this.input = new Input({ children: null });
     this.state = {
       data: [],
     };
+    this.maxCardsOnPage = 10;
   }
 
   async get() {
-    const string = this.input.getState();
-    const search = !string.input ? null : string;
-    return search?.input ? await getFilms(String(search.input)) : null;
+    const string = localStorage.getItem('searchValue');
+    const search = !string ? null : string;
+    return search ? await getFilms(String(search)) : null;
   }
 
   async componentDidMount() {
     const param = await this.get();
     if (param) {
-      this.setState({ data: param.data.Search.splice(1, 20) });
+      this.setState({ data: param.data.Search.slice(0, this.maxCardsOnPage) });
     }
   }
 
   render() {
-    return this.state.data.length == 0 ? (
-      <h1 className="message">Данные не найдены!</h1>
-    ) : (
-      <Cards {...this.state.data} />
-    );
+    if (this.state.data.length == 0) {
+      return <h1 className="message">Для получения данных введите запрос!</h1>;
+    } else {
+      return <Cards {...this.state.data} />;
+    }
   }
 }
 

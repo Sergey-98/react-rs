@@ -2,14 +2,10 @@ import React from 'react';
 import UInput from '../components/UI/input/UInput';
 import BodyPageCards from './BodyPageCards';
 import { Films } from 'types/types';
-import Input from 'components/UI/input/UInput';
 
 class Main extends React.Component<Films, { option: boolean }> {
-  public input: Input;
-
   constructor(props: Films) {
     super(props);
-    this.input = new Input({ children: null });
     this.state = { option: false };
   }
 
