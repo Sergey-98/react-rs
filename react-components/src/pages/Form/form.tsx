@@ -6,16 +6,16 @@ import downloadIcon from '../../assets/svg/download-icon.svg';
 import { validName, validEmail, countInput } from '../../Constants/Constants';
 
 export default function Form() {
-  const [errorName, setErrorName] = useState({ message: '', class: 'none' });
-  const [errorSurname, setErrorSurname] = useState({ message: '', class: 'none' });
-  const [errorDate, setErrorDate] = useState({ message: '', class: 'none' });
-  const [errorCheck, setErrorCheck] = useState({ message: '', class: 'none' });
-  const [errorFile, setErrorFile] = useState({ message: '', class: 'none' });
-  const [errorGender, setErrorGender] = useState({ message: '', class: 'none' });
-  const [errorEmail, setErrorEmail] = useState({ message: '', class: 'none' });
+  const [errorName, setErrorName] = useState({ message: '' });
+  const [errorSurname, setErrorSurname] = useState({ message: '' });
+  const [errorDate, setErrorDate] = useState({ message: '' });
+  const [errorCheck, setErrorCheck] = useState({ message: '' });
+  const [errorFile, setErrorFile] = useState({ message: '' });
+  const [errorGender, setErrorGender] = useState({ message: '' });
+  const [errorEmail, setErrorEmail] = useState({ message: '' });
   const [isValid, setIsValid] = useState(true);
-  const [buildData, setBuildData] = useState<Card[]>([]);
-  const dataCards: Card[] = [];
+  const [buildData] = useState<Card[]>([]);
+  // const dataCards: Card[] = [];
 
   const form = useRef<HTMLFormElement>(null);
   const inputName = useRef<HTMLInputElement>(null);
@@ -87,8 +87,7 @@ export default function Form() {
           file: imgURL,
         };
         form.current?.reset();
-        dataCards.push(Card);
-        setBuildData(dataCards);
+        buildData.push(Card);
         count = 0;
       }
     } else {
@@ -103,18 +102,18 @@ export default function Form() {
   const validateNameField = (name: HTMLInputElement | null) => {
     if (name && validName.test(name?.value)) {
       count += 1;
-      setErrorName({ message: '', class: 'none' });
+      setErrorName({ message: '' });
     } else {
-      setErrorName({ message: 'Убедитесь, что имя состоит из букв!', class: 'error-text' });
+      setErrorName({ message: 'Убедитесь, что имя состоит из букв!' });
     }
   };
 
   const validateLastNameField = (surname: HTMLInputElement | null) => {
     if (surname && validName.test(surname?.value)) {
       count += 1;
-      setErrorSurname({ message: '', class: 'none' });
+      setErrorSurname({ message: '' });
     } else {
-      setErrorSurname({ message: 'Убедитесь, что фамилия состоит из букв!', class: 'error-text' });
+      setErrorSurname({ message: 'Убедитесь, что фамилия состоит из букв!' });
     }
   };
 
@@ -122,29 +121,28 @@ export default function Form() {
     const currentDate = Date.now();
     if (date && Date.parse(date?.value) <= currentDate) {
       count += 1;
-      setErrorDate({ message: '', class: 'none' });
+      setErrorDate({ message: '' });
     } else {
-      setErrorDate({ message: 'Убедитесь, что дата не в будущем!', class: 'error-text' });
+      setErrorDate({ message: 'Убедитесь, что дата не в будущем!' });
     }
   };
 
   const validateEmailField = (email: HTMLInputElement | null) => {
     if (email && validEmail.test(email?.value)) {
       count += 1;
-      setErrorEmail({ message: '', class: 'none' });
+      setErrorEmail({ message: '' });
     } else {
-      setErrorEmail({ message: 'Неверно заполнено поле!', class: 'error-text' });
+      setErrorEmail({ message: 'Неверно заполнено поле!' });
     }
   };
 
   const validateCheckData = (checkData: HTMLInputElement | null) => {
     if (checkData?.checked) {
       count += 1;
-      setErrorCheck({ message: '', class: 'none' });
+      setErrorCheck({ message: '' });
     } else {
       setErrorCheck({
         message: 'Для продолжения, необходимо подтвердить согласие!',
-        class: 'error-text',
       });
     }
   };
@@ -153,9 +151,9 @@ export default function Form() {
     const allowedExtensions = ['jpg', 'png', 'gif', 'bmp'];
     if (allowedExtensions.includes(fileExtension as string)) {
       count += 1;
-      setErrorFile({ message: '', class: '' });
+      setErrorFile({ message: '' });
     } else {
-      setErrorFile({ message: 'Ошибка чтения файла!', class: 'error-text' });
+      setErrorFile({ message: 'Ошибка чтения файла!' });
     }
   };
 
@@ -164,15 +162,15 @@ export default function Form() {
     if (male?.checked) {
       gender = 'male';
       count += 1;
-      setErrorGender({ message: '', class: 'none' });
+      setErrorGender({ message: '' });
       return gender;
     } else if (female?.checked) {
       gender = 'female';
       count += 1;
-      setErrorGender({ message: '', class: 'none' });
+      setErrorGender({ message: '' });
       return gender;
     } else {
-      setErrorGender({ message: 'Неверно заполнено поле!', class: 'error-text' });
+      setErrorGender({ message: 'Неверно заполнено поле!' });
     }
   };
 
@@ -196,7 +194,9 @@ export default function Form() {
             autoComplete="off"
             placeholder="First Name"
           />
-          <span className={errorName.class}>{errorName.message}</span>
+          <span className={errorName.message.length > 0 ? 'error-text' : 'none'}>
+            {errorName.message}
+          </span>
         </label>
         <label>
           <input
@@ -206,12 +206,16 @@ export default function Form() {
             autoComplete="off"
             placeholder="Last Name"
           />
-          <span className={errorSurname.class}>{errorSurname.message}</span>
+          <span className={errorSurname.message.length > 0 ? 'error-text' : 'none'}>
+            {errorSurname.message}
+          </span>
         </label>
         <label>
           Your birthday:
           <input className="input__date" type="date" ref={inputDate} />
-          <span className={errorDate.class}>{errorDate.message}</span>
+          <span className={errorDate.message.length > 0 ? 'error-text' : 'none'}>
+            {errorDate.message}
+          </span>
         </label>
         <div className="radio-btn_container">
           <label className="radio-btn_label">
@@ -224,7 +228,9 @@ export default function Form() {
             <input type="radio" name="gender" ref={inputFemale} autoComplete="off" />
             <span className="radio-btn_span"></span>
           </label>
-          <span className={errorGender.class}>{errorGender.message}</span>
+          <span className={errorGender.message.length > 0 ? 'error-text' : 'none'}>
+            {errorGender.message}
+          </span>
         </div>
         <label>
           <input
@@ -234,7 +240,9 @@ export default function Form() {
             autoComplete="off"
             placeholder="e-mail"
           />
-          <span className={errorEmail.class}>{errorEmail.message}</span>
+          <span className={errorEmail.message.length > 0 ? 'error-text' : 'none'}>
+            {errorEmail.message}
+          </span>
         </label>
         <input className="input__file" type="file" ref={inputFile} name="file" id="input__flle" />
         <label className="input__file-button" htmlFor="input__flle">
@@ -242,13 +250,17 @@ export default function Form() {
             <img className="input__file-icon" src={downloadIcon} alt="Выбрать файл" width="60" />
           </span>
           <span className="input__file-button-text">Выберите файл</span>
-          <span className={errorFile.class}>{errorFile.message}</span>
+          <span className={errorFile.message.length > 0 ? 'error-text' : 'none'}>
+            {errorFile.message}
+          </span>
         </label>
         <label className="checkbox_label">
           I consent to the processing of personal data
           <input className="input__checkbox" type="checkbox" ref={inputCheckData} />
           <span className="checkbox_span"></span>
-          <span className={errorCheck.class}>{errorCheck.message}</span>
+          <span className={errorCheck.message.length > 0 ? 'error-text' : 'none'}>
+            {errorCheck.message}
+          </span>
         </label>
         <input
           type="submit"
@@ -258,7 +270,6 @@ export default function Form() {
           disabled={isValid}
         />
       </form>
-      {/* <FormCards {...buildData} /> */}
       {buildData.length > 0 ? <FormCards {...buildData} /> : null}
     </div>
   );
