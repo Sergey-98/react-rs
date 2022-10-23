@@ -3,7 +3,7 @@ import UInput from '../components/UI/input/UInput';
 import BodyPageCards from './BodyPageCards';
 
 export default function Main() {
-  const [option, setOption] = useState(false);
+  const [option, setOption] = useState<boolean>(false);
 
   useEffect(() => {
     if (localStorage.getItem('searchValue')) {
@@ -11,14 +11,14 @@ export default function Main() {
     }
   }, []);
 
-  function changeValue() {
+  const changeValue = () => {
     const string = localStorage.getItem('searchValue');
     if (!string) {
       setOption(false);
     }
-  }
+  };
 
-  function onKeyDown(event: React.KeyboardEvent) {
+  const onKeyDown = (event: React.KeyboardEvent) => {
     if (
       (event.code == 'Enter' || event.code == 'NumpadEnter') &&
       localStorage.getItem('searchValue')
@@ -30,7 +30,7 @@ export default function Main() {
     ) {
       setOption(false);
     }
-  }
+  };
 
   return (
     <div onKeyDown={onKeyDown} onChange={changeValue}>

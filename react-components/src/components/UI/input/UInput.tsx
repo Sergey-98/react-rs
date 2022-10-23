@@ -1,38 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './UInput.module.css';
-import { Props } from 'types/types';
+import UButton from '../button/UButton';
 
-class Input extends React.Component<Record<string, React.ReactNode>, { input: string }> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      input: localStorage.getItem('searchValue') ?? '',
-    };
-  }
-  componentDidUpdate() {
-    localStorage.setItem('searchValue', this.state.input);
-  }
-  getState() {
-    return this.state;
-  }
-  render() {
-    const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      this.setState({ input: event.target.value });
-    };
-    return (
-      <div className={classes.myInput_wrapper}>
-        <div className={classes.myInput_search}></div>
-        <input
-          aria-label="searchPanel"
-          className={classes.myInput}
-          {...this.props}
-          value={this.state.input}
-          onChange={inputHandler}
-        />
-        <div className={classes.myInput_close}></div>
-      </div>
-    );
-  }
+export default function Input(props: { placeholder: string }) {
+  const [inputValue, setInputValue] = useState(localStorage.getItem('searchValue') ?? '');
+  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+  useEffect(() => {
+    localStorage.setItem('searchValue', inputValue);
+  });
+  return (
+    <div className={classes.myInput_wrapper}>
+      <UButton />
+      <input
+        aria-label="searchPanel"
+        className={classes.myInput}
+        {...props}
+        value={inputValue}
+        onChange={inputHandler}
+      />
+      <div className={classes.myInput_close}></div>
+    </div>
+  );
 }
-
-export default Input;

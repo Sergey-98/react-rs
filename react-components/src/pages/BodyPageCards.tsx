@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Cards from 'components/Cards/Cards';
-// import { Films } from '../types/types';
 import { getFilms } from '../API/getService';
 import { maxCardsOnPage } from 'Constants/Constants';
 
