@@ -10,14 +10,6 @@ export type Data = {
   userId?: number;
 };
 
-export type Films = {
-  Poster?: string;
-  Title?: string;
-  Type?: string;
-  Year?: string;
-  imdbID?: string;
-};
-
 export type CardData = {
   title?: string;
   director?: string;
@@ -52,9 +44,36 @@ export type Card = {
   check: boolean;
   file: string;
 };
-
+export type ModalProps = {
+  val: CardComicsProps; 
+  visible: boolean;
+};
 export type CardProps = {
-  value: Films;
+  value: CardComicsProps;
   key: undefined | string;
   onOpenModal: () => void;
 };
+export type Image = {
+  path: string;
+  extension: string;
+}
+export type Prices = {
+  type?: string;
+  price?: number;
+}
+type Creators = {
+  name?: string;
+  role?: string;
+}
+type ItemCreator = {
+  items?: Creators[];
+}
+export type CardComicsProps = {
+  title?: string;
+  issueNumber?: number;
+  thumbnail: Image;
+  modified?: string;
+  id?: number;
+  creators?: ItemCreator;
+  prices: Prices[];
+}

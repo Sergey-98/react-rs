@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Cards from 'components/Cards/Cards';
 import { getAllComics } from '../API/getService';
-import { maxCardsOnPage } from 'Constants/Constants';
+import { CardComicsProps } from 'types/types';
 
 export default function BodyPageCards() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<CardComicsProps[]>([]);
   useEffect(() => {
     async function fetchData() {
       const param = await get();
@@ -20,5 +20,5 @@ export default function BodyPageCards() {
 }
 
 async function get() {
-  return (await getAllComics(9, 210)).data.data.results;
+  return await getAllComics(9, 210);
 }
