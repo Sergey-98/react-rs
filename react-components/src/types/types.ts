@@ -69,11 +69,11 @@ type ItemCreator = {
   items?: Creators[];
 }
 export type CardComicsProps = {
-  title?: string;
-  issueNumber?: number;
+  title: string;
+  issueNumber: number;
   thumbnail: Image;
-  modified?: string;
-  id?: number;
-  creators?: ItemCreator;
+  modified: string;
+  id: number;
+  creators: ItemCreator;
   prices: Prices[];
 }

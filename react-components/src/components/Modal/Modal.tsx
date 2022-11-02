@@ -4,7 +4,6 @@ import modStyles from './Modal.module.css';
 
 export default function Modal(props: ModalProps) {
   const [onOpenModal, setOnOpenModal] = useState<boolean>(props.visible);
-
   useEffect(() => {
     setOnOpenModal(props.visible);
   }, [props]);
@@ -28,7 +27,7 @@ export default function Modal(props: ModalProps) {
         <div className={modStyles.modal_content_main_content}>
           <h1 className={modStyles.film__title}>{title}</h1>
           <h3 className={modStyles.film__subtitle}>Номер выпуска: {issueNumber}</h3>
-          <h3 className={modStyles.film__subtitle}>Год выхода: {modified}</h3>
+          <h3 className={modStyles.film__subtitle}>Год выхода: {modified.slice(0, 10)}</h3>
           <h3 className={modStyles.film__subtitle}>Цена: {prices[0].price}</h3>
         </div>
       </div>
