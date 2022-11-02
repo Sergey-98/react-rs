@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cards from 'components/Cards/Cards';
-import { getFilms } from '../API/getService';
+import { getAllComics } from '../API/getService';
 import { maxCardsOnPage } from 'Constants/Constants';
 
 export default function BodyPageCards() {
@@ -8,8 +8,9 @@ export default function BodyPageCards() {
   useEffect(() => {
     async function fetchData() {
       const param = await get();
+      console.log(param);
       if (param) {
-        setData(param.data.Search.splice(1, maxCardsOnPage));
+        setData(param);
       }
     }
     fetchData();
@@ -19,7 +20,5 @@ export default function BodyPageCards() {
 }
 
 async function get() {
-  const string = localStorage.getItem('searchValue');
-  const search = !string ? null : string;
-  return search ? await getFilms(String(search)) : null;
+  return (await getAllComics(9, 210)).data.data.results;
 }
